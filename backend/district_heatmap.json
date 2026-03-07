@@ -1,0 +1,185 @@
+{
+    "district_name": "Central District",
+    "schools": [
+        {
+            "school_id": "SCH001",
+            "name": "Government Secondary School 1",
+            "lat": 28.605664705882354,
+            "lon": 77.26272549019608,
+            "total_students": 272,
+            "high_risk_count": 55,
+            "high_risk_percentage": 20.4
+        },
+        {
+            "school_id": "SCH002",
+            "name": "Government Secondary School 2",
+            "lat": 28.62527254901961,
+            "lon": 77.20154901960785,
+            "total_students": 106,
+            "high_risk_count": 15,
+            "high_risk_percentage": 14.5
+        },
+        {
+            "school_id": "SCH003",
+            "name": "Government Secondary School 3",
+            "lat": 28.65978235294118,
+            "lon": 77.24154901960785,
+            "total_students": 272,
+            "high_risk_count": 22,
+            "high_risk_percentage": 8.3
+        },
+        {
+            "school_id": "SCH004",
+            "name": "Government Secondary School 4",
+            "lat": 28.582919607843138,
+            "lon": 77.20390196078432,
+            "total_students": 292,
+            "high_risk_count": 58,
+            "high_risk_percentage": 20.1
+        },
+        {
+            "school_id": "SCH005",
+            "name": "Government Secondary School 5",
+            "lat": 28.576645098039215,
+            "lon": 77.19449019607843,
+            "total_students": 440,
+            "high_risk_count": 95,
+            "high_risk_percentage": 21.7
+        },
+        {
+            "school_id": "SCH006",
+            "name": "Government Secondary School 6",
+            "lat": 28.66448823529412,
+            "lon": 77.2933137254902,
+            "total_students": 175,
+            "high_risk_count": 47,
+            "high_risk_percentage": 27.4
+        },
+        {
+            "school_id": "SCH007",
+            "name": "Government Secondary School 7",
+            "lat": 28.59546862745098,
+            "lon": 77.18900000000001,
+            "total_students": 476,
+            "high_risk_count": 113,
+            "high_risk_percentage": 23.9
+        },
+        {
+            "school_id": "SCH008",
+            "name": "Government Secondary School 8",
+            "lat": 28.58213529411765,
+            "lon": 77.29096078431373,
+            "total_students": 214,
+            "high_risk_count": 64,
+            "high_risk_percentage": 30.0
+        },
+        {
+            "school_id": "SCH009",
+            "name": "Government Secondary School 9",
+            "lat": 28.603311764705882,
+            "lon": 77.27213725490196,
+            "total_students": 412,
+            "high_risk_count": 111,
+            "high_risk_percentage": 27.1
+        },
+        {
+            "school_id": "SCH010",
+            "name": "Government Secondary School 10",
+            "lat": 28.654292156862745,
+            "lon": 77.16782352941176,
+            "total_students": 377,
+            "high_risk_count": 96,
+            "high_risk_percentage": 25.6
+        },
+        {
+            "school_id": "SCH011",
+            "name": "Government Secondary School 11",
+            "lat": 28.692723529411765,
+            "lon": 77.26194117647059,
+            "total_students": 329,
+            "high_risk_count": 56,
+            "high_risk_percentage": 17.2
+        },
+        {
+            "school_id": "SCH012",
+            "name": "Government Secondary School 12",
+            "lat": 28.575076470588236,
+            "lon": 77.13801960784313,
+            "total_students": 303,
+            "high_risk_count": 78,
+            "high_risk_percentage": 25.9
+        },
+        {
+            "school_id": "SCH013",
+            "name": "Government Secondary School 13",
+            "lat": 28.653507843137255,
+            "lon": 77.13566666666667,
+            "total_students": 292,
+            "high_risk_count": 79,
+            "high_risk_percentage": 27.1
+        },
+        {
+            "school_id": "SCH014",
+            "name": "Government Secondary School 14",
+            "lat": 28.646449019607843,
+            "lon": 77.16703921568627,
+            "total_students": 291,
+            "high_risk_count": 64,
+            "high_risk_percentage": 22.3
+        },
+        {
+            "school_id": "SCH015",
+            "name": "Government Secondary School 15",
+            "lat": 28.6339,
+            "lon": 77.19135294117648,
+            "total_students": 468,
+            "high_risk_count": 50,
+            "high_risk_percentage": 10.9
+        },
+        {
+            "school_id": "SCH016",
+            "name": "Government Secondary School 16",
+            "lat": 28.647233333333336,
+            "lon": 77.309,
+            "total_students": 318,
+            "high_risk_count": 72,
+            "high_risk_percentage": 22.8
+        },
+        {
+            "school_id": "SCH017",
+            "name": "Government Secondary School 17",
+            "lat": 28.519390196078433,
+            "lon": 77.16154901960785,
+            "total_students": 114,
+            "high_risk_count": 29,
+            "high_risk_percentage": 25.9
+        },
+        {
+            "school_id": "SCH018",
+            "name": "Government Secondary School 18",
+            "lat": 28.515468627450982,
+            "lon": 77.19762745098039,
+            "total_students": 169,
+            "high_risk_count": 19,
+            "high_risk_percentage": 11.8
+        },
+        {
+            "school_id": "SCH019",
+            "name": "Government Secondary School 19",
+            "lat": 28.514684313725493,
+            "lon": 77.1897843137255,
+            "total_students": 467,
+            "high_risk_count": 52,
+            "high_risk_percentage": 11.2
+        },
+        {
+            "school_id": "SCH020",
+            "name": "Government Secondary School 20",
+            "lat": 28.518605882352944,
+            "lon": 77.1254705882353,
+            "total_students": 109,
+            "high_risk_count": 18,
+            "high_risk_percentage": 17.4
+        }
+    ]
+}
