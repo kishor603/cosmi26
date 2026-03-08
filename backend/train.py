@@ -35,8 +35,8 @@ def train_model():
     print("\nClassification Report:\n", classification_report(y_test, y_pred))
     
     print("Saving model and features...")
-    joblib.dump(model, 'dropout_rf_model.joblib')
-    joblib.dump(feature_cols, 'feature_cols.joblib')
+    joblib.dump(model, os.path.join(base_dir, 'dropout_rf_model.joblib'))
+    joblib.dump(feature_cols, os.path.join(base_dir, 'feature_cols.joblib'))
     print("Training complete and artifacts saved.")
 
 if __name__ == "__main__":

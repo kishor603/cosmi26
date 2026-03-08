@@ -10,6 +10,7 @@
     --risk-high-bg: #fff5f5;
     --risk-medium: #f6c23e;
     --risk-medium-bg: #fcf8e3;
+    --warning-color: #f6c23e;
     --risk-low: #1cc88a;
     --risk-low-bg: #e6fffa;
     --border-color: #e3e6f0;
@@ -110,9 +111,50 @@ body {
 
 .dashboard-inner { padding: 0 30px 30px; }
 
-.user-profile { display: flex; align-items: center; gap: 15px; }
-.notification-bell { color: #adb5bd; font-weight:bold; }
-.badge { background-color: var(--risk-high); color: white; padding: 2px 5px; border-radius: 10px; font-size: 9px; vertical-align:top; margin-left:-5px;}
+/* Notifications */
+.notification-wrapper { position: relative; }
+.notification-bell { color: rgba(255,255,255,0.6); font-weight:bold; cursor: pointer; transition: color 0.2s; position: relative; padding: 5px; }
+.notification-bell:hover { color: #fff; }
+.badge { 
+    background-color: var(--risk-high); color: white; padding: 2px 6px; border-radius: 10px; font-size: 10px; 
+    position: absolute; top: -2px; right: -2px; border: 2px solid #1e293b; font-weight: 700;
+}
+
+.notification-dropdown {
+    position: absolute; top: 45px; right: 0; width: 320px; background: white; border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2); z-index: 1000; display: none; overflow: hidden;
+    animation: fadeInScale 0.2s ease-out; border: 1px solid var(--border-color);
+}
+.notification-dropdown.active { display: block; }
+
+.dropdown-header { padding: 15px; border-bottom: 1px solid #eee; display: flex; justify-content: space-between; align-items: center; }
+.dropdown-header h3 { font-size: 14px; color: #333; margin: 0; }
+.dropdown-header button { background: none; border: none; color: var(--primary-color); font-size: 12px; cursor: pointer; }
+
+.dropdown-body { max-height: 400px; overflow-y: auto; }
+.notification-item { 
+    padding: 15px; border-bottom: 1px solid #f8f9fa; cursor: pointer; transition: background 0.2s;
+    display: flex; gap: 12px;
+}
+.notification-item:hover { background: #f0f4ff; }
+.notification-item.unread { background: #f8faff; border-left: 3px solid var(--primary-color); }
+
+.nt-icon { 
+    width: 36px; height: 36px; border-radius: 50%; background: var(--risk-high-bg); color: var(--risk-high);
+    display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+}
+.nt-content { flex: 1; }
+.nt-title { font-size: 13px; font-weight: 600; color: #333; margin-bottom: 3px; }
+.nt-desc { font-size: 12px; color: #666; line-height: 1.4; }
+.nt-time { font-size: 11px; color: #999; margin-top: 5px; }
+
+.empty-notifications { padding: 40px 20px; text-align: center; color: #999; font-size: 13px; }
+
+@keyframes fadeInScale {
+    from { opacity: 0; transform: scale(0.95) translateY(-10px); }
+    to { opacity: 1; transform: scale(1) translateY(0); }
+}
+
 .avatar { width: 32px; height: 32px; border-radius: 50%; }
 
 /* Cards */

@@ -4,22 +4,21 @@ import numpy as np
 def generate_student_data(num_students=1000):
     np.random.seed(42)
     
-    first_names = ["Aarav", "Vivaan", "Aditya", "Vihaan", "Arjun", "Sai", "Ayaan", "Krishna", "Ishaan", "Shaurya", "Diya", "Sanya", "Kavya", "Ananya", "Aadhya", "Priya", "Riya", "Avni", "Sara", "Tara"]
-    last_names = ["Kumar", "Sharma", "Singh", "Patel", "Das", "Yadav", "Gupta", "Mishra", "Chauhan", "Nair", "Rao", "Reddy", "Iyer", "Sen"]
+    first_names = ["Kavin", "Anbarasu", "Elango", "Iniyan", "Madhavan", "Nallan", "Oviya", "Pugazh", "Tamizh", "Valavan", "Akilan", "Ezhil", "Ilango", "Karthik", "Manisankar", "Nalan", "Oviyan", "Pavithran", "Shankar", "Velan"]
+    last_names = ["Selvan", "Pandian", "Cholan", "Cheran", "Maruthu", "Velu", "Mani", "Rajan", "Sivam", "Nathan"]
     
     student_ids = [f"STU{str(i).zfill(4)}" for i in range(1, num_students + 1)]
     
     names = []
     for i in range(num_students):
         fname = np.random.choice(first_names)
-        lname = np.random.choice(last_names)
         if i < 500:
             std = "9"
             sec = chr(ord('A') + (i // 100))
         else:
             std = "10"
             sec = chr(ord('A') + ((i - 500) // 100))
-        names.append(f"{fname} {lname} ({std}{sec})")
+        names.append(f"{fname} ({std}{sec})")
     
     # 1. Attendance (0-100%) - Key indicator for dropouts
     attendance = np.random.normal(loc=82, scale=18, size=num_students)

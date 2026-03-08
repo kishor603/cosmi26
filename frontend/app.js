@@ -1,4 +1,4 @@
-const API_URL = 'http://127.0.0.1:8000/api/students';
+const API_URL = '/api/students';
 
 let allStudents = [];
 
@@ -22,6 +22,14 @@ const inputModal = document.getElementById('input-modal');
 const closeInputModal = document.getElementById('close-input-modal');
 const assessmentForm = document.getElementById('assessment-form');
 const assessmentResult = document.getElementById('assessment-result');
+
+// Notifications
+const ntWrapper = document.getElementById('notification-wrapper');
+const ntTrigger = document.getElementById('notification-trigger');
+const ntDropdown = document.getElementById('notification-dropdown');
+const ntList = document.getElementById('notification-list');
+const ntBadge = document.getElementById('notification-badge');
+const ntMarkAll = document.getElementById('mark-all-read');
 
 // Example Buttons
 const btnExAttendance = document.getElementById('btn-ex-attendance');
@@ -75,10 +83,71 @@ function initDashboard() {
     
     updateSummaryCards();
     updateSectionCards();
+    updateNotifications();
     renderTable(allStudents);
     
     searchInput.addEventListener('input', handleFilters);
     riskFilter.addEventListener('change', handleFilters);
+
+    // Notification UI Event Listeners
+    if (ntTrigger) {
+        ntTrigger.addEventListener('click', (e) => {
+            e.stopPropagation();
+            ntDropdown.classList.toggle('active');
+        });
+    }
+
+    if (ntMarkAll) {
+        ntMarkAll.addEventListener('click', () => {
+            ntBadge.style.display = 'none';
+            ntBadge.innerText = '0';
+            document.querySelectorAll('.notification-item').forEach(item => item.classList.remove('unread'));
+        });
+    }
+
+    document.addEventListener('click', (e) => {
+        if (ntDropdown && !ntWrapper.contains(e.target)) {
+            ntDropdown.classList.remove('active');
+        }
+    });
+}
+
+function updateNotifications() {
+    if (!ntList || !ntBadge) return;
+
+    const highRiskStudents = allStudents.filter(s => s.risk_level === 'High');
+    
+    if (highRiskStudents.length === 0) {
+        ntList.innerHTML = '<div class="empty-notifications">No new risk alerts</div>';
+        ntBadge.style.display = 'none';
+        return;
+    }
+
+    ntBadge.innerText = highRiskStudents.length > 9 ? '9+' : highRiskStudents.length;
+    ntBadge.style.display = 'flex';
+
+    ntList.innerHTML = '';
+    // Show top 5 high risk students in notifications
+    highRiskStudents.slice(0, 8).forEach(s => {
+        const item = document.createElement('div');
+        item.className = 'notification-item unread';
+        item.innerHTML = `
+            <div class="nt-icon">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path></svg>
+            </div>
+            <div class="nt-content">
+                <div class="nt-title">High Dropout Risk: ${s.name}</div>
+                <div class="nt-desc">${s.attendance ? s.attendance.toFixed(1) : '--'}% Attendance | Score: ${s.risk_score}%</div>
+                <div class="nt-time">Needs immediate intervention</div>
+            </div>
+        `;
+        item.addEventListener('click', () => {
+             item.classList.remove('unread');
+             ntDropdown.classList.remove('active');
+             openActionModal(s.id);
+        });
+        ntList.appendChild(item);
+    });
 }
 
 function showError() {
@@ -309,7 +378,7 @@ async function loadHeatmapData() {
     
     setTimeout(async () => {
          try {
-             const res = await fetch('http://127.0.0.1:8000/district_heatmap.json');
+             const res = await fetch('/district_heatmap.json');
              const mapData = await res.json();
              
              let html = `<div style="width: 100%; height: 100%; display: flex; flex-wrap: wrap; gap: 10px; padding: 20px; overflow-y: auto;">`;

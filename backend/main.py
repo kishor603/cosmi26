@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import FileResponse
+from fastapi.responses import FileResponse, RedirectResponse
+from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
 from contextlib import asynccontextmanager
 import pandas as pd
@@ -18,12 +19,27 @@ students_df = None
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     global model, feature_cols, students_df
+    print(f"LOADING RESOURCES... (CWD: {os.getcwd()})")
     if os.path.exists(MODEL_PATH) and os.path.exists(FEATURES_PATH):
-        model = joblib.load(MODEL_PATH)
-        feature_cols = joblib.load(FEATURES_PATH)
+        try:
+            model = joblib.load(MODEL_PATH)
+            feature_cols = joblib.load(FEATURES_PATH)
+            print("SUCCESS: Model and features loaded.")
+        except Exception as e:
+            print(f"ERROR: Failed to load model/features: {e}")
+    else:
+        print(f"WARNING: Model or features not found at {MODEL_PATH}, {FEATURES_PATH}")
+
     if os.path.exists(DATA_PATH):
-        students_df = pd.read_csv(DATA_PATH)
+        try:
+            students_df = pd.read_csv(DATA_PATH)
+            print("SUCCESS: Student data loaded.")
+        except Exception as e:
+            print(f"ERROR: Failed to load student data: {e}")
+    else:
+        print(f"WARNING: Data file not found at {DATA_PATH}")
     yield
+    print("SHUTTING DOWN...")
 
 app = FastAPI(title="India Dropout Early Warning System API", lifespan=lifespan)
 
@@ -34,6 +50,15 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+# Serving frontend static files
+# Assuming the server is started from the project root or the backend directory
+frontend_path = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "frontend")
+if os.path.exists(frontend_path):
+    app.mount("/frontend", StaticFiles(directory=frontend_path, html=True), name="frontend")
+    print(f"SUCCESS: Mounted frontend at {frontend_path}")
+else:
+    print(f"WARNING: Frontend path not found at {frontend_path}")
 
 
 class StudentFeatures(BaseModel):
@@ -55,7 +80,7 @@ interventions_db = {}
 
 @app.get("/")
 def read_root():
-    return {"message": "Welcome to the Student Risk API"}
+    return RedirectResponse(url="/frontend/login.html")
 
 @app.get("/district_heatmap.json")
 def serve_heatmap():
@@ -119,7 +144,7 @@ def predict_risk(student: StudentFeatures):
     if model is None:
         return {"error": "Model not loaded."}
         
-    data = pd.DataFrame([student.dict()])
+    data = pd.DataFrame([student.model_dump() if hasattr(student, 'model_dump') else student.dict()])
     data = data[feature_cols]
     prob = model.predict_proba(data)[0][1]
     
@@ -201,7 +226,7 @@ def get_interventions(student_id: str):
 def log_intervention(student_id: str, record: InterventionRecord):
     if student_id not in interventions_db:
         interventions_db[student_id] = []
-    interventions_db[student_id].append(record.dict())
+    interventions_db[student_id].append(record.model_dump() if hasattr(record, 'model_dump') else record.dict())
     return {"status": "success", "message": "Intervention logged"}
 
 @app.get("/api/generate_communication/{student_id}")
